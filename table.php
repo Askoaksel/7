@@ -5,7 +5,7 @@
 	require_once("../../../config.php");
 	
 	//create connection
-	$mysql = new mysqli("localhost", $db_username, $db_password, "webpr2016_romil");
+	$mysql = new mysqli("localhost", $db_username, $db_password, "webpr2016_askaks");
 	
 	//SQL sentence
 	$stmt = $mysql->prepare("SELECT id, recipient, message, created FROM messages_sample ORDER BY created DESC LIMIT 10");
@@ -28,6 +28,7 @@
 			$table_html .= "<th>Recipient</th>";
 			$table_html .= "<th>Message</th>";
 			$table_html .= "<th>Created</th>";
+			$table_html .= "<th>Delete ?</th>";
 		$table_html .= "</tr>";
 	
 	// GET RESULT 
@@ -41,6 +42,8 @@
 			$table_html .= "<td>".$recipient."</td>";
 			$table_html .= "<td>".$message."</td>";
 			$table_html .= "<td>".$created."</td>";
+			$table_html .= "<td><a href='?delete=".$id."'>X</a></td>";
+			
 		$table_html .= "</tr>"; //end row
 
 	}
