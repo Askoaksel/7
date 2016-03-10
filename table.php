@@ -7,6 +7,30 @@
 	//create connection
 	$mysql = new mysqli("localhost", $db_username, $db_password, "webpr2016_askaks");
 	
+	/*
+			IF THERE IS ?DELETE=ROW_ID in the url
+	*/
+	
+	if(isset($_GET["delete"])){
+	
+		echo "Deleting row with id:".$_GET["delete"];
+		
+		// NOW() = current date-time
+		$stmt = $mysql->prepare("UPDATE messages_sample SET deleted=NOW() WHERE id = ?");
+		
+		//replace the ?
+		$stmt->bind_param("i", $_GET["delete"]);
+		
+		if($stmt->execute()){
+				echo "deleted successfully";
+		}else{
+				echo $stmt->error;
+	}
+	
+		//closes the statement, so others can use connection
+		$stmt->close();
+	
+	
 	//SQL sentence
 	$stmt = $mysql->prepare("SELECT id, recipient, message, created FROM messages_sample ORDER BY created DESC LIMIT 10");
 	
